@@ -1,0 +1,74 @@
+<!doctype html>
+<html ng-app="StoreApp" lang="en">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.3/angular.min.js"></script>
+  <script src="controller.js"></script>
+  <script src="service.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="mainCtrl">
+  <div class="container">
+    <div ng-if="state == 'login'">
+      <form>
+        <h1>login</h1><br>
+        Usrename&nbsp: 
+        <input type="text" ng-model="inputUser"  size="30"placeholder="Username"><br><br>
+        Password &nbsp: 
+        <input type="password" ng-model="inputPassword"  size="30"placeholder="Password"><br><br>
+        <input class="btn-primary" type="submit" ng-click ='checkUser(inputUser,inputPassword)' value="login">&nbsp&nbsp<button class="btn-primary" ng-click ='changeState()'>Register</button>
+      </form>
+    </div>
+    <div ng-if="state == 'register'">
+      <form>
+        <h1>Register</h1><br>
+        Usrename&nbsp: 
+        <input type="text" ng-model="inputUser"  size="30"placeholder="Username"><br><br>
+        Password &nbsp: 
+        <input type="password" ng-model="inputPassword"  size="30"placeholder="Password"><br><br>
+        <input class="btn-primary" type="submit" ng-click ='addUser(inputUser,inputPassword)' value="submit">
+      </form>
+    </div>
+    <div ng-if="state == 'working'">
+      <h1 style = "text-align: right;">{{priceCal()}}</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th><center>#</center></th>
+            <th>รายการ</th>
+            <th>ราคา</th>
+            <th><center>แก้ไข</center></th>
+            <th><center>ลบ</center></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in products">
+            <td class="col-sm-1" align="center"><input type="checkbox" ng-model="product.done">{{$index+1}}</td>
+            <td><input type="text" ng-model="product.product"></td>
+            <td><input type="text" ng-model="product.price"></td>
+            <td class="col-sm-1" align="center">
+              <button type="button" class="btn btn-primary" ng-click="editProduct(product)">Save</button>
+            </td>
+            <td class="col-sm-1" align="center">
+              <button type="button" class="btn btn-danger" ng-click="deleteProduct(product._id)"><i class="fa fa-trash-o"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form ng-submit="addProduct(inputProduct,inputPrice)">
+        <input type="text" ng-model="inputProduct"  size="30"
+                 placeholder="รายการ">
+        <input type="text" ng-model="inputPrice"  size="30"
+                 placeholder="ราคา">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
+
